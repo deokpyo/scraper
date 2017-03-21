@@ -1,0 +1,24 @@
+nav {
+    background-color: #ae0c00;
+}
+
+footer.page-footer {
+    background-color: #024b85;
+}
+
+.waves-effect {
+    background-color: black;
+}
+
+.waves-effect:hover {
+    background-color:white;
+    color: black;
+}
+
+.collapsible-body{
+    overflow: auto;
+}
+
+#list-row{
+    margin:0;
+}
