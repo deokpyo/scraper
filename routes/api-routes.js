@@ -131,7 +131,7 @@ module.exports = function (app) {
         });
     });
 
-    // Create a new note or replace an existing note
+    // Save an article to archive
     app.post("/save/:id", function (req, res) {
         console.log(req.body);
         // Use the article id to find and update it's note
@@ -139,6 +139,24 @@ module.exports = function (app) {
                 "_id": req.params.id
             }, {
                 "saved": req.body.saved
+            })
+            // Execute the above query
+            .exec(function (err, doc) {
+                // Log any errors
+                if (err) {
+                    console.log(err);
+                } else {
+                    // Or send the document to the browser
+                    res.send(doc);
+                }
+            });
+    });
+
+    app.delete("/delete/:id", function (req, res) {
+        console.log(req.body);
+        // Use the article id to find and update it's note
+        Article.deleteOne({
+                "_id": req.params.id
             })
             // Execute the above query
             .exec(function (err, doc) {

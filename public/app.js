@@ -1,6 +1,8 @@
     $(document).ready(function () {
         $('.parallax').parallax();
         $('.collapsible').collapsible();
+        $('.modal').modal();
+        $('input#input_text, textarea#textarea1').characterCounter();
         updateArticles();
         updateArchive();
     });
@@ -37,7 +39,8 @@
             }
         });
     }
-        function updateArchive() {
+
+    function updateArchive() {
         // Grab the articles as a json
         $.getJSON("/articles", function (data) {
             $("#archive_list").empty();
@@ -52,7 +55,7 @@
                     //var icon = $('<i class="material-icons">');
                     var divb = $('<div class="collapsible-body">');
                     var span = $('<p>');
-                    var btnn = $('<a class="note waves-effect waves-light btn right">');
+                    var btnn = $('<a id="modal-note" class="waves-effect waves-light btn left">');
                     var btnd = $('<a class="delete waves-effect waves-light btn right">');
                     //icon.text("label_outline");
                     //divh.append(icon);
@@ -60,6 +63,7 @@
                     span.text(data[i].link);
                     btnn.text("Note");
                     btnn.attr("data-id", data[i]._id);
+                    btnn.attr("href", "#modal-note");
                     btnd.text("Delete");
                     btnd.attr("data-id", data[i]._id);
                     divb.append(span);
@@ -145,7 +149,6 @@
         // Grab the id associated with the article from the submit button
         var thisId = $(this).attr("data-id");
         console.log(thisId);
-
         // Run a POST request to change the note, using what's entered in the inputs
         $.ajax({
                 method: "POST",
@@ -161,8 +164,29 @@
                 console.log(data);
                 updateArticles();
             });
+    });
 
-        // // Also, remove the values entered in the input and textarea for note entry
-        // $("#titleinput").val("");
-        // $("#bodyinput").val("");
+    // delete archived article
+    $(document).on("click", ".delete", function () {
+        // Grab the id associated with the article from the submit button
+        var thisId = $(this).attr("data-id");
+        console.log(thisId);
+        // Run a POST request to change the note, using what's entered in the inputs
+        $.ajax({
+                method: "DELETE",
+                url: "/delete/" + thisId
+            })
+            // With that done
+            .done(function (data) {
+                // Log the response
+                console.log(data);
+                updateArchive();
+            });
+    });
+
+    $(document).on("click", "#modal-note", function () {
+        var data_id = $(this).attr('data-id');
+        $('#modal-note').modal('open');
+        console.log(data_id);
+        //$('.modal-title').text('RESV ' + date + " " + time);
     });
