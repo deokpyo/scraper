@@ -10,18 +10,27 @@
 </head>
 
 <body>
-    <nav>
-        <div class="nav-wrapper">
-            <a href="/" class="brand-logo left">Korean Scraper</a>
-            <ul id="nav-mobile" class="right">
-                <li><a href="http://www.koreatimes.co.kr">Korea Times</a></li>
-            </ul>
-            <ul id="nav-mobile" class="right">
-                <li><a href="/article">Saved Articles</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo left">Korean Scraper</a>
+                <ul id="nav-mobile" class="right">
+                    <li><a href="http://www.koreaherald.com/" target="_blank">Korea Herald</a></li>
+                </ul>
+                <ul id="nav-mobile" class="right">
+                    <li><a href="/article">Saved Articles</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
     {{{ body }}}
+    <div id="modal-index" class="modal">
+        <div id="modal-index-content" class="modal-content center">
+        </div>
+        <div class="modal-footer center">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green"><i class="material-icons right">done</i></a>
+        </div>
+    </div>
     <footer class="page-footer">
         <div class="container">
             <div class="row">

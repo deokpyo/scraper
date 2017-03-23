@@ -27,18 +27,21 @@ module.exports = function (app) {
     // A GET request to scrape the echojs website
     app.get("/scrape", function (req, res) {
         // First, we grab the body of the html with request
-        request("http://www.echojs.com/", function (error, response, html) {
+        request("http://www.koreaherald.com/list.php?ct=020206000000", function (error, response, html) {
             // Then, we load that into cheerio and save it to $ for a shorthand selector
             var $ = cheerio.load(html);
+            //console.log(html);
             // Now, we grab every h2 within an article tag, and do the following:
-            $("article h2").each(function (i, element) {
+            $("details").each(function (i, element) {
 
                 // Save an empty result object
                 var result = {};
 
                 // Add the text and href of every link, and save them as properties of the result object
-                result.title = $(this).children("a").text();
-                result.link = $(this).children("a").attr("href");
+                result.title = $(this).children("h3").text();
+                result.link = $(this).children("p").text();
+                //result.link = $(this).children("a").attr("href")
+                //result.link = $(this).children("a").attr("href");
 
                 // Using our Article model, create a new entry
                 // This effectively passes the result object to the entry (and the title and link)
@@ -57,9 +60,10 @@ module.exports = function (app) {
                 });
 
             });
+            // Tell the browser that we finished scraping the text
+            res.send("Scrape Completed");
         });
-        // Tell the browser that we finished scraping the text
-        res.send("Scrape Complete");
+
     });
 
     // This will get the articles we scraped from the mongoDB

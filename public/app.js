@@ -7,6 +7,23 @@
         updateArchive();
     });
 
+    // trigger scrape route
+    $(document).on("click", "#button", function () {
+        $.get("/scrape", function (data) {
+            modalComplete(data);
+            updateArticles();
+
+        }).done(function () {
+            
+        })
+    });
+
+    // trigger msg modal
+    function modalComplete(textmsg){
+        $('#modal-index').modal('open');
+        $('#modal-index-content').text(textmsg);
+    }
+
     function updateArticles() {
         // Grab the articles as a json
         $.getJSON("/articles", function (data) {
@@ -26,7 +43,7 @@
                     //icon.text("label_outline");
                     //divh.append(icon);
                     divh.html(icon + data[i].title);
-                    span.text(data[i].link);
+                    span.append(data[i].link);
                     btn.html(icon_save);
                     btn.attr("data-id", data[i]._id);
                     divb.append(span);
@@ -101,7 +118,7 @@
             })
             // With that done
             .done(function (data) {
-                // Log the response
+                modalComplete("'" + notetitle + "'" + " - has been added to notes.");
                 getNotes(data._id);
                 // Empty the notes section
                 //$("#note").empty();
@@ -130,6 +147,7 @@
             .done(function (data) {
                 // Log the response
                 console.log(data);
+                modalComplete("'" + data.title + "'" + " - has been saved to archive.");
                 updateArticles();
             });
     });
@@ -148,6 +166,7 @@
             .done(function (data) {
                 // Log the response
                 console.log(data);
+                modalComplete("'" + thisId + "'" + " - has been deleted.");
                 updateArchive();
             });
     });
@@ -164,10 +183,12 @@
             .done(function (data) {
                 // Log the response
                 //console.log(data);
+                modalComplete("'" + note_id + "'" + " - has been deleted.");
                 getNotes(localStorage.article_id);
             });
     });
 
+    // trigger note modal
     $(document).on("click", "#modal", function () {
         var data_id = $(this).attr('data-id');
         localStorage.setItem('article_id', data_id);
@@ -191,7 +212,7 @@
                 console.log(data.notes);
                 var li_title = $('<li class="collection-header">');
                 // The title of the article
-                li_title.text(data.title);
+                li_title.text("Notes for: " + data.title);
                 $("#note").append(li_title);
                 for (i in data.notes) {
                     var li = $('<li>');

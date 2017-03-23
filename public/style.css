@@ -6,9 +6,14 @@ footer.page-footer {
     background-color: #024b85;
 }
 
-#article_list #archive_list {
-    max-height: 400px;
-    overflow: scroll;
+ul#article_list {
+    max-height: 400px !important;
+    overflow: scroll !important;
+}
+
+ul#archive_list {
+    max-height: 400px !important;
+    overflow: scroll !important;
 }
 
 #note-div #note-div2{
@@ -54,6 +59,8 @@ footer.page-footer {
 
 #list-row {
     margin: 0;
+    /*max-height: 400px;
+    overflow: scroll;*/
 }
 
 .section {
