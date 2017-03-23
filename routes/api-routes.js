@@ -3,6 +3,7 @@ var request = require("request");
 var cheerio = require("cheerio");
 
 // Requiring our Note and Article models
+var mongoose = require("mongoose");
 var Note = require("../models/Note.js");
 var Article = require("../models/Article.js");
 
@@ -17,7 +18,7 @@ module.exports = function (app) {
     });
     app.get("/article", function (req, res) {
         res.render("article", {
-            title: "About Page",
+            title: "Archive Page",
             layout: "main.hbs",
             condition: true
         });
@@ -83,7 +84,7 @@ module.exports = function (app) {
                 "_id": req.params.id
             })
             // ..and populate all of the notes associated with it
-            .populate("note")
+            .populate("notes")
             // now, execute our query
             .exec(function (error, doc) {
                 // Log any errors
@@ -102,6 +103,7 @@ module.exports = function (app) {
     app.post("/articles/:id", function (req, res) {
         // Create a new note and pass the req.body to the entry
         var newNote = new Note(req.body);
+        console.log(newNote);
 
         // And save the new note the db
         newNote.save(function (error, doc) {
@@ -115,7 +117,9 @@ module.exports = function (app) {
                 Article.findOneAndUpdate({
                         "_id": req.params.id
                     }, {
-                        "note": doc._id
+                        $push: {
+                            "notes": doc._id
+                        }
                     })
                     // Execute the above query
                     .exec(function (err, doc) {
@@ -129,6 +133,7 @@ module.exports = function (app) {
                     });
             }
         });
+
     });
 
     // Save an article to archive
@@ -156,6 +161,24 @@ module.exports = function (app) {
         console.log(req.body);
         // Use the article id to find and update it's note
         Article.deleteOne({
+                "_id": req.params.id
+            })
+            // Execute the above query
+            .exec(function (err, doc) {
+                // Log any errors
+                if (err) {
+                    console.log(err);
+                } else {
+                    // Or send the document to the browser
+                    res.send(doc);
+                }
+            });
+    });
+
+    app.delete("/note/delete/:id", function (req, res) {
+        console.log(req.body);
+        // Use the note id to find and update it's note
+        Note.deleteOne({
                 "_id": req.params.id
             })
             // Execute the above query
