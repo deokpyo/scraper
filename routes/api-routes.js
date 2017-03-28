@@ -36,12 +36,16 @@ module.exports = function (app) {
 
                 // Save an empty result object
                 var result = {};
+                // var title = $(this).children("h3").text();
+                // var body = $(this).children("p").text();
+                // var link = $(this).children("h3").children("a").attr("href");
+
+                // console.log(title, body, link);
 
                 // Add the text and href of every link, and save them as properties of the result object
                 result.title = $(this).children("h3").text();
-                result.link = $(this).children("p").text();
-                //result.link = $(this).children("a").attr("href")
-                //result.link = $(this).children("a").attr("href");
+                result.body = $(this).children("p").text();
+                result.link = $(this).children("h3").children("a").attr("href");
 
                 // Using our Article model, create a new entry
                 // This effectively passes the result object to the entry (and the title and link)

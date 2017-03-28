@@ -43,7 +43,8 @@ app.set("view engine", "hbs");
 require("./routes/api-routes.js")(app);
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/scraper");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/scraper");
+// mongoose.connect("mongodb://localhost/scraper");
 var db = mongoose.connection;
 
 // Show any mongoose errors

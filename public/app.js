@@ -14,12 +14,12 @@
             updateArticles();
 
         }).done(function () {
-            
+
         })
     });
 
     // trigger msg modal
-    function modalComplete(textmsg){
+    function modalComplete(textmsg) {
         $('#modal-index').modal('open');
         $('#modal-index-content').text(textmsg);
     }
@@ -38,12 +38,19 @@
                     var icon = '<i class="material-icons">label_outline</i>';
                     var icon_save = '<i class="material-icons">play_for_work</i>';
                     var divb = $('<div class="collapsible-body">');
+                    var br = $('<br>');
                     var span = $('<p>');
+                    var atag = $('<a class="weblink" target="_blank">');
                     var btn = $('<a class="save waves-effect waves-light right">');
                     //icon.text("label_outline");
                     //divh.append(icon);
                     divh.html(icon + data[i].title);
-                    span.append(data[i].link);
+                    span.append(data[i].body);
+                    atag.text(data[i].link);
+                    atag.attr('href', data[i].link);
+                    span.append(br);
+                    span.append(br);
+                    span.append(atag);
                     btn.html(icon_save);
                     btn.attr("data-id", data[i]._id);
                     divb.append(span);
@@ -73,13 +80,20 @@
                     var icon_delete = '<i class="material-icons">delete</i>';
                     //var icon = $('<i class="material-icons">');
                     var divb = $('<div class="collapsible-body">');
+                    var br = $('<br>');
                     var span = $('<p>');
+                    var atag = $('<a class="weblink" target="_blank">');
                     var btnn = $('<a id="modal" class="waves-effect waves-light  right">');
                     var btnd = $('<a class="delete waves-effect waves-light  right">');
                     //icon.text("label_outline");
                     //divh.append(icon);
                     divh.html(icon + data[i].title);
-                    span.text(data[i].link);
+                    span.append(data[i].body);
+                    atag.text(data[i].link);
+                    atag.attr('href', data[i].link);
+                    span.append(br);
+                    span.append(br);
+                    span.append(atag);
                     btnn.html(icon_note);
                     btnn.attr("data-id", data[i]._id);
                     btnn.attr("href", "#modal-note");

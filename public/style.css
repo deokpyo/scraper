@@ -16,6 +16,10 @@ ul#archive_list {
     overflow: scroll !important;
 }
 
+a.weblink:hover {
+    text-decoration: underline;
+}
+
 #note-div #note-div2{
     margin-bottom: 0 !important;
 }
