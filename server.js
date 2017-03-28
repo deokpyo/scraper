@@ -47,6 +47,8 @@ mongoose.connect("mongodb://heroku_5p7b0k1x:80jeftrj69ai14k2ndjcrcjj51@ds137090.
 // mongoose.connect("mongodb://localhost/scraper");
 var db = mongoose.connection;
 
+var PORT = process.env.PORT || 3000;
+
 // Show any mongoose errors
 db.on("error", function(error) {
   console.log("Mongoose Error: ", error);
@@ -58,6 +60,6 @@ db.once("open", function() {
 });
 
 // Listen on port 3000
-app.listen(3000, function() {
+app.listen(PORT, function() {
   console.log("App running on port 3000!");
 });
